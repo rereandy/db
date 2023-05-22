@@ -104,5 +104,4 @@ func dbName(dataSource string) string {
 		panic(fmt.Sprintf("datasource err:%v", dataSource))
 	}
 	return dataSource[:idx]
-
 }
