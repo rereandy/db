@@ -20,13 +20,13 @@ func NewEventReceiver(dbname string, costThreshold int64, lenThreshold int64) *s
 
 // Event receives a simple notification when various events occur
 func (s *sqlEventReceiver) Event(eventName string) {
-	fmt.Errorf("DB Event name %v", eventName)
+	fmt.Printf("DB Event name %v\n", eventName)
 }
 
 // EventKv receives a notification when various events occur along with
 // optional key/value data
 func (s *sqlEventReceiver) EventKv(eventName string, kvs map[string]string) {
-	fmt.Errorf("DB EventKv name %v kv %v", eventName, kvs)
+	fmt.Printf("DB EventKv name %v kv %v", eventName, kvs)
 }
 
 // EventErr receives a notification of an error if one occurs
@@ -39,6 +39,7 @@ func (s *sqlEventReceiver) EventErr(eventName string, err error) error {
 // optional key/value data
 func (s *sqlEventReceiver) EventErrKv(eventName string, err error, kvs map[string]string) error {
 	fmt.Errorf("DB EventErr name:%v err:%v kvs:%v", eventName, err, kvs)
+	table(kvs["sql"])
 	return err
 }
 
@@ -61,6 +62,7 @@ func (s *sqlEventReceiver) TimingKv(eventName string, nanoseconds int64, kvs map
 		}
 		fmt.Printf("DB TimingKv name:%v kv:%v cost:%v", eventName, kvs, time.Duration(nanoseconds).String())
 	}
+	table(kvs["sql"])
 }
 
 // SELECT * FROM {table} WHERE
